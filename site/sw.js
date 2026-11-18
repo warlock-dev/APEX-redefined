@@ -23,7 +23,11 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(
     fetch(request)
       .then((res) => {
-        if (res.ok) caches.open(CACHE).then((c) => c.put(request, res.clone()));
+        // Copy the response before the page reads it; copying later fails with "Response body is already used".
+        if (res.ok) {
+          const copy = res.clone();
+          event.waitUntil(caches.open(CACHE).then((c) => c.put(request, copy)));
+        }
         return res;
       })
       .catch(() => caches.match(request, { ignoreSearch: true }).then((hit) => hit || caches.match('./index.html'))),
