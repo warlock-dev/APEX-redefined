@@ -1,0 +1,11 @@
+{
+  "name": "apex2",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/model.test.mjs tests/store.test.mjs tests/sync.test.mjs tests/calendar.test.mjs",
+    "test:e2e": "node --test tests/e2e.test.mjs",
+    "start": "node scripts/serve.mjs"
+  }
+}
